@@ -6,6 +6,7 @@ import Login from './pages/Login.jsx'
 import Register from './pages/Register.jsx'
 import Logout from './pages/Logout.jsx'
 import Layout from './Layout.jsx'
+import CalculatorPage from './pages/CalculatorPage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
           {
               path: "logout",
               element: <Logout/>
+          },
+          {
+              path: "calculatorPage",
+              element: <CalculatorPage/>
           },
           
       ]
