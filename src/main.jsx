@@ -7,6 +7,7 @@ import Register from './pages/Register.jsx'
 import Logout from './pages/Logout.jsx'
 import Layout from './Layout.jsx'
 import CalculatorPage from './pages/CalculatorPage.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 const router = createBrowserRouter([
   {
@@ -15,11 +16,15 @@ const router = createBrowserRouter([
       children: [
           {
               path: "",
-              element: <Home/>
+              element: <Register/>
           },
           {
-              path: "register",
-              element: <Register/>
+              path: "home",
+              element: (
+                <ProtectedRoute>
+                  <Home /> {/* Protected route */}
+                </ProtectedRoute>
+              ),
           },
           {
               path: "login",
@@ -27,13 +32,21 @@ const router = createBrowserRouter([
           },
           {
               path: "logout",
-              element: <Logout/>
+              element: (
+                <ProtectedRoute>
+                  <Logout /> {/* Protected route */}
+                </ProtectedRoute>
+              ),
           },
           {
-              path: "calculatorPage",
-              element: <CalculatorPage/>
+            path: "calculatorPage",
+            element: (
+              <ProtectedRoute>
+                <CalculatorPage /> {/* Protected route */}
+              </ProtectedRoute>
+            ),
           },
-          
+    
       ]
   }
 ])
