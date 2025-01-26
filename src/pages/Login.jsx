@@ -30,7 +30,7 @@ const navigate = useNavigate()
       const result = await response.json();
       console.log('API Response:', result); // Log the API response
       alert('Login successful!');
-      navigate('/');
+      navigate('/home');
     } catch (error) {
       console.error('Error:', error);
       setErrorMessage(error.message || 'Something went wrong. Please try again.');
