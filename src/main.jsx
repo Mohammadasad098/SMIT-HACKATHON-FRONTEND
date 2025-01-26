@@ -19,9 +19,7 @@ const router = createBrowserRouter([
           },
           {
               path: "home",
-              element: (
-                  <Home />
-              ),
+              element: <Home />
           },
           {
               path: "login",
@@ -29,17 +27,11 @@ const router = createBrowserRouter([
           },
           {
               path: "logout",
-              element: (
-                  <Logout />
-              ),
+              element: <Logout />
           },
           {
             path: "calculatorPage",
-            element: (
-              <ProtectedRoute>
-                <CalculatorPage /> {/* Protected route */}
-              </ProtectedRoute>
-            ),
+            element: <CalculatorPage />
           },
     
       ]
