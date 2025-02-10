@@ -14,7 +14,7 @@ const Register = () => {
     setErrorMessage('');
 
     try {
-      const response = await fetch('https://confused-vinni-asad123-51d65d4a.koyeb.app/register', {
+      const response = await fetch('https://decisive-norean-asad123-95fe096b.koyeb.app/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
