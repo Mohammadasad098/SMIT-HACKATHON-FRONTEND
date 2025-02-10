@@ -14,7 +14,7 @@ const Register = () => {
     setErrorMessage('');
 
     try {
-      const response = await fetch('http://localhost:3000/api/v1/register', {
+      const response = await fetch('https://confused-vinni-asad123-51d65d4a.koyeb.app/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

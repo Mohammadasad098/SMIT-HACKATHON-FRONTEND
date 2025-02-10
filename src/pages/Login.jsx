@@ -15,7 +15,7 @@ const navigate = useNavigate()
     setErrorMessage('');
 
     try {
-      const response = await fetch('http://localhost:3000/api/v1/login', {
+      const response = await fetch('https://confused-vinni-asad123-51d65d4a.koyeb.app/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
