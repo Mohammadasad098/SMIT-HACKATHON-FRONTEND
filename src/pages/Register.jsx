@@ -8,13 +8,18 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
 
+  const API_URL = import.meta.env.VITE_API_BACKEND_URL;
+  console.log(API_URL); 
+
+
+
   const registerUser = async (data) => {
     console.log('Form Values:', data);
     setLoading(true);
     setErrorMessage('');
 
     try {
-      const response = await fetch("https://decisive-norean-asad123-95fe096b.koyeb.app/register", {
+      const response = await fetch("http://localhost:3000/api/v1/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
