@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Button } from "../components/button"
 import AnimatedStatsSection from "../components/animated-stats-section";
-import Microfinance from "../components/Microfinance";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -769,7 +767,6 @@ const LandingPage = () => {
                 {paragraph}
               </p>
             ))}
-            <Button className="bg-[#c066e5] hover:bg-[#a94bc7] text-white px-6 py-2 rounded-md">Explore More</Button>
           </div>
 
           {/* Chat button */}
