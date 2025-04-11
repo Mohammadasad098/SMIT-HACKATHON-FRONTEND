@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
   const [loading, setLoading] = useState(false);
-const navigate = useNavigate()
+  const navigate = useNavigate();
 
-
-  const Logout = async () => {
+  const handleLogout = async () => {
     setLoading(true);
     try {
       const response = await fetch('http://localhost:3000/api/v1/logout', {
@@ -17,9 +16,13 @@ const navigate = useNavigate()
       });
 
       if (response.ok) {
+        // Local Storage se token remove karo
+        localStorage.removeItem('accessToken');
+        sessionStorage.removeItem('accessToken');
+
         alert('Logout successful!');
         console.log('User logged out successfully');
-        navigate('/login');
+        navigate('/');
       } else {
         alert('Logout failed. Please try again.');
       }
@@ -33,8 +36,8 @@ const navigate = useNavigate()
 
   return (
     <button
-      onClick={Logout}
-      className="py-2 px-4 bg-red-500 text-white rounded hover:bg-red-600"
+      onClick={handleLogout}
+      className="py-10 px-4 bg-red-500 text-white rounded hover:bg-red-600"
       disabled={loading}
     >
       {loading ? 'Logging Out...' : 'Logout'}

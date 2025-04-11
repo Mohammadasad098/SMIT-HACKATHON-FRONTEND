@@ -7,6 +7,11 @@ import Register from './pages/Register.jsx'
 import Logout from './pages/Logout.jsx'
 import Layout from './Layout.jsx'
 import CalculatorPage from './pages/CalculatorPage.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx'
+import UserContextProvider from './context/UserContextProvider.jsx'
+import LoanRequest from './pages/LoanRequest.jsx'
+import AfterLoginRoute from './components/AfterLoginRoute.jsx'
+import Services from './pages/Services.jsx'
 
 const router = createBrowserRouter([
   {
@@ -15,23 +20,35 @@ const router = createBrowserRouter([
       children: [
           {
               path: "",
-              element: <Register/>
+              element:
+                <Home/>
           },
           {
-              path: "home",
-              element: <Home />
+              path: "register",
+              element:
+              <AfterLoginRoute><Register/></AfterLoginRoute>
           },
           {
               path: "login",
-              element: <Login/>
+              element: <AfterLoginRoute><Login/></AfterLoginRoute>
           },
           {
               path: "logout",
-              element: <Logout />
+              element: <ProtectedRoute>
+                <Logout />
+              </ProtectedRoute>
           },
           {
-            path: "calculatorPage",
-            element: <CalculatorPage />
+            path: "Guarantor",
+            element: <ProtectedRoute><CalculatorPage /></ProtectedRoute>
+          },
+          {
+            path: "loanRequest",
+            element: <ProtectedRoute><LoanRequest/></ProtectedRoute>
+          },
+          {
+            path: "services",
+            element: <Services/>
           },
     
       ]
@@ -40,6 +57,9 @@ const router = createBrowserRouter([
 
 
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}>
-  </RouterProvider>
+  <UserContextProvider>
+     <RouterProvider router={router}>
+     </RouterProvider>
+  </UserContextProvider>
+ 
 )

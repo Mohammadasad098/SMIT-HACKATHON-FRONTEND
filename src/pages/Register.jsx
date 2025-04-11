@@ -1,27 +1,22 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate()
-
-  const API_URL = import.meta.env.VITE_API_BACKEND_URL;
-  console.log(API_URL); 
-
-
+  const navigate = useNavigate();
 
   const registerUser = async (data) => {
     console.log('Form Values:', data);
     setLoading(true);
-    setErrorMessage('');
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch(`http://localhost:3000/api/v1/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
@@ -31,11 +26,16 @@ const Register = () => {
 
       const result = await response.json();
       console.log('API Response:', result);
-      alert('User registered successfully!');
-      navigate('/login');
+
+      // ✅ کامیاب رجسٹریشن پر:
+      toast.success('User registered successfully! Please log in.');
+      
+      setTimeout(() => {
+        navigate('/login'); // لاگ ان پیج پر ری ڈائریکٹ
+      }, 2000);
     } catch (error) {
       console.error('Error:', error);
-      setErrorMessage(error.message || 'Something went wrong. Please try again.');
+      toast.error(error.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -43,6 +43,7 @@ const Register = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <ToastContainer position="top-right" autoClose={3000} />
       <form
         onSubmit={handleSubmit(registerUser)}
         className="bg-white shadow-lg rounded-lg px-8 py-10 w-full max-w-md"
@@ -55,7 +56,6 @@ const Register = () => {
             <input
               {...register('userName', { required: true })}
               type="text"
-              id="userName"
               placeholder="Enter your username"
               className="input input-bordered w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
@@ -65,7 +65,6 @@ const Register = () => {
             <input
               {...register('email', { required: true })}
               type="email"
-              id="email"
               placeholder="Enter your email"
               className="input input-bordered w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
@@ -75,15 +74,11 @@ const Register = () => {
             <input
               {...register('password', { required: true })}
               type="password"
-              id="password"
               placeholder="Enter your password"
               className="input input-bordered w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             />
             {errors.password && <span className="text-red-600">Password is required</span>}
           </label>
-          {errorMessage && (
-            <span className="text-red-600 text-center block mb-4">{errorMessage}</span>
-          )}
           <div className="text-center">
             <button
               type="submit"

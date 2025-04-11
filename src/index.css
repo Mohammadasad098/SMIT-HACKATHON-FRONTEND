@@ -1,1 +1,45 @@
 @import "tailwindcss";
+
+
+.brandspace-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f0f4ff; /* Light background color */
+    position: relative;
+    overflow: hidden;
+}
+
+.brandspace-text {
+    font-size: 10rem; /* Large text size */
+    color: transparent; 
+    text-shadow: 0 0 5px pink; /* Pink glow effect */
+    display: inline-block;
+    -webkit-background-clip: text; /* Clip for color effect */
+    background-clip: text;
+}
+
+.brandspace-text::after {
+    content: attr(data-text);
+    position: absolute;
+    color: pink; /* Pink outline */
+    -webkit-text-stroke: 1px white; /* White stroke */
+}
+
+.scroll-button {
+    margin-top: 50px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e63946; /* Button color */
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
+}
+
+.scroll-button:hover {
+    background-color: #d62839; /* Darker shade on hover */
+}

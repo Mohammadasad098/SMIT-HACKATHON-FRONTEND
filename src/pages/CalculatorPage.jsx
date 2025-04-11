@@ -3,6 +3,13 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const CalculatorPage = () => {
+
+
+
+
+
+
+  
   const [loanDetails, setLoanDetails] = useState({
     guarantors: [
       { name: "", email: "", location: "", cnic: "" },
@@ -24,12 +31,12 @@ const CalculatorPage = () => {
       (guarantor) =>
         guarantor.name && guarantor.email && guarantor.location && guarantor.cnic
     );
-
+  
     if (!isValid) {
       toast.error("Please fill out all guarantor fields.");
       return;
     }
-
+  
     // Prepare the API payload
     const payload = {
       name1: loanDetails.guarantors[0].name,
@@ -41,7 +48,7 @@ const CalculatorPage = () => {
       location2: loanDetails.guarantors[1].location,
       cnic2: loanDetails.guarantors[1].cnic,
     };
-
+  
     try {
       // Make the API call
       const response = await fetch("http://localhost:3000/api/v1/guarantorData", {
@@ -51,10 +58,19 @@ const CalculatorPage = () => {
         },
         body: JSON.stringify(payload),
       });
-
+  
       if (response.ok) {
         toast.success("Loan request successfully submitted! Check your email.");
         console.log("Loan Details Submitted:", payload);
+        
+        // Reset form fields after submission
+        setLoanDetails({
+          guarantors: [
+            { name: "", email: "", location: "", cnic: "" },
+            { name: "", email: "", location: "", cnic: "" },
+          ],
+        });
+  
       } else {
         const errorData = await response.json();
         toast.error(errorData.message || "Something went wrong!");
@@ -81,14 +97,10 @@ const CalculatorPage = () => {
         theme="colored"
       />
 
-      <h1 className="text-4xl font-bold text-center text-gray-800">Loan Request</h1>
+      <h1 className="text-4xl font-bold text-center text-gray-800"> Guarantor Information</h1>
 
       {/* Loan Details Form */}
       <section className="mt-8 max-w-3xl mx-auto bg-white shadow-lg rounded p-6">
-        <h2 className="text-2xl font-bold text-gray-700 text-center mb-4">
-          Guarantor Information
-        </h2>
-
         {/* Guarantor 1 Form */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold text-gray-700 border-b pb-2">
@@ -99,7 +111,7 @@ const CalculatorPage = () => {
               <div key={field}>
                 <label className="block text-gray-600 capitalize">{field}</label>
                 <input
-                  type={field === "email" ? "email" : "text"}
+                  type={field === "email" ? "email" : field === "cnic" ? "number" : "text"}
                   value={loanDetails.guarantors[0][field]}
                   onChange={(e) => handleLoanDetailsChange(e, 0, field)}
                   className="w-full p-2 border rounded"
@@ -120,7 +132,7 @@ const CalculatorPage = () => {
               <div key={field}>
                 <label className="block text-gray-600 capitalize">{field}</label>
                 <input
-                  type={field === "email" ? "email" : "text"}
+                  type={field === "email" ? "email" : field === "cnic" ? "number" : "text"}
                   value={loanDetails.guarantors[1][field]}
                   onChange={(e) => handleLoanDetailsChange(e, 1, field)}
                   className="w-full p-2 border rounded"
