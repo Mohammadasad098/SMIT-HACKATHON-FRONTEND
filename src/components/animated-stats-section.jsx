@@ -76,63 +76,80 @@ export default function AnimatedStatsSection() {
 
   return (
     <section ref={ref} className="py-12 px-3 bg-white text-center bg-gradient-to-r from-[#f8d6e9]/70 to-[#d8cafa]/70">
-      <h3 className="text-4xl font-bold text-[#e36bbb] mb-8">Financial Milestones</h3>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <motion.div
-          className="p-6 bg-gray-50 rounded-lg shadow-md"
+    <h3 className="text-4xl font-bold text-[#e36bbb] mb-8">Financial Milestones</h3>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      {/* Loans Disbursed */}
+      <motion.div
+        className="p-6 bg-gray-50 rounded-lg shadow-md"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          show: { opacity: 1, y: 0, transition: { duration: 1 } },
+        }}
+      >
+        <h4 className="text-2xl font-semibold text-[#8e68ed]">Loans Disbursed</h4>
+        <motion.p
+          className="text-4xl font-bold mt-4 text-[#e36bbb]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 2 }}
         >
-          <h4 className="text-2xl font-semibold text-[#8e68ed]">Loans Disbursed</h4>
-          <motion.p
-            className="text-4xl font-bold mt-4 text-[#e36bbb]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2 }}
-          >
-            {loanCount}K+
-          </motion.p>
-          <p className="text-gray-600 mt-2">Successful loan applications processed</p>
-        </motion.div>
+          {loanCount}K+
+        </motion.p>
+        <p className="text-gray-600 mt-2">Successful loan applications processed</p>
+      </motion.div>
 
-        <motion.div
-          className="p-6 bg-gray-50 rounded-lg shadow-md"
+      {/* Years in Service */}
+      <motion.div
+        className="p-6 bg-gray-50 rounded-lg shadow-md"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          show: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.2 } },
+        }}
+      >
+        <h4 className="text-2xl font-semibold text-[#8e68ed]">Years in Service</h4>
+        <motion.p
+          className="text-4xl font-bold mt-4 text-[#e36bbb]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
+          transition={{ duration: 2 }}
         >
-          <h4 className="text-2xl font-semibold text-[#8e68ed]">Years in Service</h4>
-          <motion.p
-            className="text-4xl font-bold mt-4 text-[#e36bbb]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2 }}
-          >
-            {yearCount}+
-          </motion.p>
-          <p className="text-gray-600 mt-2">Years of financial expertise</p>
-        </motion.div>
+          {yearCount}+
+        </motion.p>
+        <p className="text-gray-600 mt-2">Years of financial expertise</p>
+      </motion.div>
 
-        <motion.div
-          className="p-6 bg-gray-50 rounded-lg shadow-md"
+      {/* Happy Customers */}
+      <motion.div
+        className="p-6 bg-gray-50 rounded-lg shadow-md"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          show: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.4 } },
+        }}
+      >
+        <h4 className="text-2xl font-semibold text-[#8e68ed]">Happy Customers</h4>
+        <motion.p
+          className="text-4xl font-bold mt-4 text-[#e36bbb]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.4 }}
+          transition={{ duration: 2 }}
         >
-          <h4 className="text-2xl font-semibold text-[#8e68ed]">Happy Customers</h4>
-          <motion.p
-            className="text-4xl font-bold mt-4 text-[#e36bbb]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 2 }}
-          >
-            {customerCount}K+
-          </motion.p>
-          <p className="text-gray-600 mt-2">Satisfied borrowers nationwide</p>
-        </motion.div>
-      </div>
-    </section>
+          {customerCount}K+
+        </motion.p>
+        <p className="text-gray-600 mt-2">Satisfied borrowers nationwide</p>
+      </motion.div>
+
+    </div>
+  </section>
   )
 }
 

@@ -82,7 +82,7 @@ const CalculatorPage = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-6">
+    <div className="bg-gray-100 min-h-screen pt-24 md-pt-34">
       {/* Toast Container */}
       <ToastContainer
         position="top-right"

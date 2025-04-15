@@ -1,94 +1,137 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { Eye, EyeOff } from "lucide-react"
 
-const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+export default function LoginPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+  const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const loginUser = async (data) => {
-    console.log('Form Values:', data);
-    setLoading(true);
+    console.log("Form Values:", data)
+    setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:3000/api/v1/login', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3000/api/v1/login", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      });
+      })
 
       if (!response.ok) {
-        throw new Error('Invalid email or password. Please try again.');
+        throw new Error("Invalid email or password. Please try again.")
       }
 
-      const result = await response.json();
-      console.log('API Response:', result);
+      const result = await response.json()
+      console.log("API Response:", result)
 
       if (result.accessToken) {
-        localStorage.setItem('accessToken', result.accessToken);
-        toast.success('Login successful!');
-        setTimeout(() => navigate('/loanRequest'), 2000);
+        localStorage.setItem("accessToken", result.accessToken)
+        toast.success("Login successful!")
+        setTimeout(() => {
+          window.location.href = "/loanRequest" // Using window.location instead of navigate for Next.js
+        }, 2000)
       }
     } catch (error) {
-      console.error('Error:', error);
-      toast.error(error.message || 'Something went wrong. Please try again.');
+      console.error("Error:", error)
+      toast.error(error.message || "Something went wrong. Please try again.")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword)
+  }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex min-h-screen items-center pt-10 md:pt-0 justify-center bg-gradient-to-br from-purple-50 to-pink-50 p-4">
       <ToastContainer position="top-right" autoClose={3000} />
-      <form
-        onSubmit={handleSubmit(loginUser)}
-        className="bg-white shadow-lg rounded-lg px-8 py-10 w-full max-w-md"
-      >
-        <div className="mb-6">
-          <h1 className="text-center text-4xl font-bold text-gray-800">LOGIN</h1>
+      <div className="w-full max-w-md rounded-lg border border-purple-200 bg-white shadow-lg">
+        <div className="space-y-1 p-6 text-center">
+          <h2 className="text-3xl font-bold text-purple-800">Login</h2>
+          <p className="text-purple-600">Enter your credentials to access your account</p>
         </div>
-        <div className="border rounded-3xl px-6 py-8 bg-[#ffeef2]">
-          <label className="block mb-4">
+        <form onSubmit={handleSubmit(loginUser)} className="space-y-4 p-6">
+          <div className="space-y-2">
+            <label htmlFor="email" className="block text-sm font-medium text-purple-700">
+              Email
+            </label>
             <input
-              {...register('email', { required: true })}
-              type="email"
               id="email"
-              placeholder="Enter your email"
-              className="input input-bordered w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
+              type="email"
+              placeholder="name@example.com"
+              className="w-full rounded-md border border-purple-200 px-3 py-2 placeholder-gray-400 focus:border-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-400/50"
+              {...register("email", { required: true })}
             />
-            {errors.email && <span className="text-red-600">Email is required</span>}
-          </label>
-          <label className="block mb-4">
-            <input
-              {...register('password', { required: true })}
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              className="input input-bordered w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
-            />
-            {errors.password && <span className="text-red-600">Password is required</span>}
-          </label>
-          <div className="text-center">
+            {errors.email && <span className="text-sm text-red-600">Email is required</span>}
+          </div>
+          <div className="space-y-2">
+            <label htmlFor="password" className="block text-sm font-medium text-purple-700">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className="w-full rounded-md border border-purple-200 px-3 py-2 pr-10 placeholder-gray-400 focus:border-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-400/50"
+                {...register("password", { required: true })}
+              />
+              <button
+                type="button"
+                onClick={toggleShowPassword}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-purple-700"
+              >
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+              </button>
+            </div>
+            {errors.password && <span className="text-sm text-red-600">Password is required</span>}
+          </div>
+          <div className="text-right">
+            <a href="/forgot-password" className="text-sm font-medium text-purple-600 hover:text-pink-600">
+              Forgot password?
+            </a>
+          </div>
+          <div className="flex flex-col space-y-4 pt-4">
             <button
               type="submit"
-              className="w-full py-3 bg-[#00b5fd] text-white rounded-lg"
+              className="w-full rounded-md bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 font-medium text-white hover:from-purple-700 hover:to-pink-700 disabled:opacity-70"
               disabled={loading}
             >
               {loading ? (
-                <span className="loading loading-dots loading-md"></span>
+                <span className="flex justify-center space-x-1">
+                  <span className="h-2 w-2 animate-bounce rounded-full bg-white"></span>
+                  <span
+                    className="h-2 w-2 animate-bounce rounded-full bg-white"
+                    style={{ animationDelay: "0.2s" }}
+                  ></span>
+                  <span
+                    className="h-2 w-2 animate-bounce rounded-full bg-white"
+                    style={{ animationDelay: "0.4s" }}
+                  ></span>
+                </span>
               ) : (
-                'LOGIN'
+                "Login"
               )}
             </button>
+            <p className="text-center text-sm text-gray-600">
+              Don't have an account?{" "}
+              <a href="/register" className="font-medium text-purple-600 hover:text-pink-600">
+                Sign up
+              </a>
+            </p>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  );
-};
-export default Login;
+  )
+}
