@@ -34,7 +34,7 @@ const Navbar = () => {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         {/* Logo */}
         <Link to="/">
-          <span className="self-center text-3xl hover:text-[#f70acc] font-semibold whitespace-nowrap text-black">
+          <span className="self-center text-2xl md:text-3xl hover:text-[#f70acc] font-semibold whitespace-nowrap text-black">
             Saylani MicroFinance
           </span>
         </Link>

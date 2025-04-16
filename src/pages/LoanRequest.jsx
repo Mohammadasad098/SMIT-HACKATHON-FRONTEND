@@ -85,7 +85,7 @@ const LoanRequest = () => {
   }, [category, setValue]);
 
   return (
-    <section id="loan-calculator" className="pt-28 md:pt-24 bg-blue-50">
+    <section id="loan-calculator" className="pt-28 md:pt-24 flex bg-blue-50">
       <div className="container mx-auto text-center">
         <h3 className="text-3xl font-bold text-blue-600">Loan Request</h3>
         <p className="mt-4 text-gray-700">
@@ -96,7 +96,7 @@ const LoanRequest = () => {
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
         {/* Calculator Form */}
-        <div className="mt-10 bg-white p-6 mx-3 shadow-lg rounded max-w-lg">
+        <div className="mt-10 bg-white p-6 mx-auto shadow-lg rounded max-w-lg">
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* CNIC Input */}
             <div className="mb-4">
