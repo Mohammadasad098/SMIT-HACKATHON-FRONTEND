@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import AnimatedStatsSection from "../components/animated-stats-section";
+import AnimatedStatsSection from "../components/ui/animated-stats-section";
 import { Carousel } from "flowbite-react";
 import { ChevronUp } from "lucide-react"
-import DesignWork from "../components/DesignWork";
+import DesignWork from "../components/ui/DesignWork";
+import Microfinance from '../components/ui/Microfinance'
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -494,8 +495,8 @@ const LandingPage = () => {
                         {/* Iframe for embedded map */}
                         <iframe
                           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57877.13100067769!2d67.02747407647448!3d24.955201653497202!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb338b5cdbbc095%3A0x3bd5f577d2e87a59!2sSaylani%20Welfare%20Trust%2C%20Gulshan%20Branch!5e0!3m2!1sen!2s!4v1744267183432!5m2!1sen!2s"
-                          width="100%"
-                          height="100%"
+                          width="120%"
+                          height="120%"
                           allowFullScreen=""
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"
@@ -524,7 +525,10 @@ const LandingPage = () => {
       </div>
 
 
+      <Microfinance/>
     </div>
+
+
   );
 };
 

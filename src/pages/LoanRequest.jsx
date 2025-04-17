@@ -87,7 +87,7 @@ const LoanRequest = () => {
   return (
     <section id="loan-calculator" className="pt-28 md:pt-24 flex bg-blue-50">
       <div className="container mx-auto text-center">
-        <h3 className="text-3xl font-bold text-blue-600">Loan Request</h3>
+        <h3 className="text-3xl font-bold text-purple-600">Loan Request</h3>
         <p className="mt-4 text-gray-700">
           Calculate your loan breakdown by selecting the category, subcategory, deposit, and loan period.
         </p>
@@ -96,7 +96,7 @@ const LoanRequest = () => {
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
         {/* Calculator Form */}
-        <div className="mt-10 bg-white p-6 mx-auto shadow-lg rounded max-w-lg">
+        <div className="mt-10 bg-white md:mx-auto mx-2 p-6 shadow-lg rounded max-w-lg">
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* CNIC Input */}
             <div className="mb-4">
@@ -186,7 +186,7 @@ const LoanRequest = () => {
             <div className="text-center">
               <button
                 type="submit"
-                className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none"
+                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-70 text-white rounded focus:outline-none"
               >
                 Submit
               </button>

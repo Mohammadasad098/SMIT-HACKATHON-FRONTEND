@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useContext } from "react"
 import { Link, useLocation } from "react-router-dom"
-import UserContext from "../context/UserContext"
+import UserContext from "../../context/UserContext"
 
 const Navbar = () => {
   const { isUser } = useContext(UserContext)

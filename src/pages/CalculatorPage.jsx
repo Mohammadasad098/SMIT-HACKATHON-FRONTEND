@@ -92,10 +92,17 @@ const CalculatorPage = () => {
         theme="colored"
       />
 
-      <h1 className="text-4xl font-bold text-center text-gray-800"> Guarantor Information</h1>
+<h1 className="md:text-4xl text-3xl font-bold text-center text-purple-600 py-4">
+  Guarantor Information
+</h1>
+<p className="text-center text-gray-600 mb-6 max-w-xl mx-auto">
+  Please provide the details of a guarantor who can vouch for your identity or application. 
+  This information helps us verify and process your request more securely.
+</p>
+
 
       {/* Loan Details Form */}
-      <section className="mt-8 max-w-3xl mx-auto bg-white shadow-lg rounded p-6">
+      <section className="mt-8 max-w-3xl md:mx-auto mx-2 bg-white shadow-lg rounded p-6">
         {/* Guarantor 1 Form */}
         <div className="mb-8">
           <h3 className="text-lg font-semibold text-gray-700 border-b pb-2">
@@ -141,7 +148,7 @@ const CalculatorPage = () => {
         <button
           type="button"
           onClick={submitLoanRequest}
-          className="bg-blue-600 text-white py-2 px-4 rounded w-full"
+          className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 disabled:opacity-70 text-white py-2 px-4 rounded w-full"
         >
           Submit Loan Request
         </button>
