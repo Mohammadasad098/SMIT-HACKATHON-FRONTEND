@@ -44,7 +44,7 @@ const LoanRequest = () => {
         loanPeriod: parseInt(data.loanPeriod, 10),
       };
 
-      const response = await fetch("http://localhost:3000/api/v1/financeData", {
+      const response = await fetch(`${import.meta.env.VITE_API_BACKEND_URL}/api/v1/financeData`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
