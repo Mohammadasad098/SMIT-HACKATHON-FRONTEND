@@ -18,11 +18,14 @@ export default function RegisterPage() {
     setLoading(true)
 
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/register`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BACKEND_URL}/api/v1/register`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(data),
-      })
+      });
+      
 
       if (!response.ok) {
         throw new Error("Failed to register. Please check the provided data.")
