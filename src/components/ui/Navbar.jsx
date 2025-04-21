@@ -1,12 +1,15 @@
 import { useState, useRef, useEffect, useContext } from "react"
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import UserContext from "../../context/UserContext"
+import LogoutModal from "./LogoutModel"
 
 const Navbar = () => {
-  const { isUser } = useContext(UserContext)
+  const { isUser, setIsUser } = useContext(UserContext)
   const [isOpen, setIsOpen] = useState(false)
+  const [showLogoutModal, setShowLogoutModal] = useState(false)
   const navbarRef = useRef(null)
   const location = useLocation()
+  const navigate = useNavigate()
   const currentPath = location.pathname
 
   const toggleMenu = () => setIsOpen(!isOpen)
@@ -29,6 +32,41 @@ const Navbar = () => {
     }
   }, [])
 
+  useEffect(() => {
+    closeMenu()
+  }, [location])
+
+  // Logout actions
+  const handleLogoutClick = () => {
+    setShowLogoutModal(true)
+  }
+
+  const confirmLogout = () => {
+    localStorage.removeItem("accessToken")
+    setIsUser(false)
+    setShowLogoutModal(false)
+    navigate("/")
+  }
+
+  const cancelLogout = () => {
+    setShowLogoutModal(false)
+  }
+
+  const menuItems = isUser
+    ? [
+        { path: "/", label: "Home" },
+        { path: "/Services", label: "Services" },
+        { path: "/Guarantor", label: "Guarantor" },
+        { path: "/loanRequest", label: "Loan Request" },
+        { path: "/logout", label: "Logout", onClick: handleLogoutClick },
+      ]
+    : [
+        { path: "/", label: "Home" },
+        { path: "/Services", label: "Services" },
+        { path: "/register", label: "Register" },
+        { path: "/login", label: "Login" },
+      ]
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50 border-gray-200 bg-gradient-to-r from-[#8e68ed]/70 to-[#e36bbb]/70 backdrop-blur-xl">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -39,104 +77,80 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Hamburger Menu */}
+        {/* Hamburger */}
         <button
-  onClick={toggleMenu}
-  className="md:hidden p-2 rounded-full bg-gradient-to-r from-[#8e68ed] to-[#e36bbb] text-black"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="32"
-    height="32"
-    viewBox="0 0 512 512"
-    className="fill-current"
-  >
-    <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
-  </svg>
-</button>
+          onClick={toggleMenu}
+          className="md:hidden p-2 rounded-full bg-gradient-to-r from-[#8e68ed] to-[#e36bbb] text-black"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 512 512" className="fill-current">
+            <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+          </svg>
+        </button>
 
-
-        {/* Mobile Menu Overlay - Now slides from right */}
+        {/* Mobile menu */}
         <div
           className={`fixed top-0 right-0 h-full w-4/5 bg-white z-50 transform transition-transform duration-500 ease-in-out ${
             isOpen ? "translate-x-0" : "translate-x-full"
           } md:static md:h-auto md:w-auto md:bg-transparent md:transform-none md:block md:transition-none`}
         >
-          {/* Close Button for Mobile */}
           <div className="flex justify-end p-4 md:hidden">
             <button onClick={handleCloseClick} className="text-gray-500">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
           </div>
 
-          {/* Mobile Menu Items */}
-          <div
-  ref={navbarRef}
-  id="navbar-default"
-  className="w-full bg-white h-screen fixed top-0 left-0 z-50 md:static md:h-auto md:bg-transparent"
->
-  <ul className="font-large flex font-semibold flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
-    {["/", "/register", "/login", "/logout", "/Services", "/Guarantor", "/loanRequest"].map((path, index) => {
-      const isActive = currentPath === path;
-
-      return (
-        <li key={index} className="border-b md:border-none">
-  <Link
-    to={path}
-    onClick={handleLinkClick}
-    className={`block py-4 px-3 md:py-1 md:px-3 rounded relative md:p-0 transition-all duration-300
-      ${isActive ? "text-purple-800 bg-purple-100 md:bg-transparent" : "text-gray-900 dark:text-purple-800"}
-      hover:bg-purple-50 md:hover:bg-transparent
-      after:absolute after:-bottom-2 after:left-0 after:h-[4px] after:transition-all after:duration-300
-      ${
-        isActive
-          ? "after:w-full after:bg-purple-700"
-          : "after:w-0 hover:after:w-full after:bg-purple-700 md:hover:after:bg-purple-700"
-      }
-    `}
-  >
-    {path === "/" ? "Home" : path.charAt(1).toUpperCase() + path.slice(2)}
-    {path === "/Services" && (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-5 w-5 inline-block ml-2 md:hidden"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-      </svg>
-    )}
-  </Link>
-</li>
-
-
-      );
-    })}
-  </ul>
-</div>
-
-
+          {/* Navigation Links */}
+          <div ref={navbarRef} id="navbar-default" className="w-full bg-white h-screen fixed top-0 left-0 z-50 md:static md:h-auto md:bg-transparent">
+            <ul className="font-large flex font-semibold flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
+              {menuItems.map(({ path, label, onClick }, index) => {
+                const isActive = currentPath === path
+                return (
+                  <li key={index} className="border-b md:border-none">
+                    <Link
+                      to={path !== "/logout" ? path : "#"}
+                      onClick={(e) => {
+                        if (onClick) {
+                          e.preventDefault()
+                          onClick()
+                        } else {
+                          handleLinkClick()
+                        }
+                      }}
+                      className={`block py-4 px-3 md:py-1 md:px-3 rounded relative md:p-0 transition-all duration-300
+                        ${
+                          isActive
+                            ? "text-purple-800 bg-purple-100 md:bg-transparent"
+                            : "text-gray-900 dark:text-purple-800"
+                        }
+                        hover:bg-purple-50 md:hover:bg-transparent
+                        after:absolute after:-bottom-2 after:left-0 after:h-[4px] after:transition-all after:duration-300
+                        ${
+                          isActive
+                            ? "after:w-full after:bg-purple-700"
+                            : "after:w-0 hover:after:w-full after:bg-purple-700 md:hover:after:bg-purple-700"
+                        }`}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
         </div>
       </div>
+
+      {/* 🔔 Logout Confirmation Modal */}
+      <LogoutModal isOpen={showLogoutModal} onConfirm={confirmLogout} onCancel={cancelLogout} />
     </nav>
   )
 }
 
 export default Navbar
+
 
 
 

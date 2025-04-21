@@ -85,7 +85,7 @@ const LoanRequest = () => {
   }, [category, setValue]);
 
   return (
-    <section id="loan-calculator" className="pt-28 md:pt-24 flex bg-blue-50">
+    <section id="loan-calculator" className="pt-28 md:pt-24 flex bg-gradient-to-r from-[#d8cafa]/70 to-[#f8d6e9]/70">
       <div className="container mx-auto text-center">
         <h3 className="text-3xl font-bold text-purple-600">Loan Request</h3>
         <p className="mt-4 text-gray-700">
@@ -96,7 +96,7 @@ const LoanRequest = () => {
         <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
 
         {/* Calculator Form */}
-        <div className="mt-10 bg-white md:mx-auto mx-2 p-6 shadow-lg rounded max-w-lg">
+        <div className="mt-10 bg-white md:mx-auto mx-2 p-6 shadow-lg rounded max-w-lg mb-6">
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* CNIC Input */}
             <div className="mb-4">
@@ -160,7 +160,7 @@ const LoanRequest = () => {
 
             {/* Initial Deposit */}
             <div className="mb-4">
-              <label className="block text-left text-gray-700 font-semibold mb-2">Initial Deposit (PKR)</label>
+              <label className="block text-left text-gray-700 font-semibold mb-2">Deposit (PKR)</label>
               <input
                 type="number"
                 {...register("initialDeposit", { required: "Initial Deposit is required" })}

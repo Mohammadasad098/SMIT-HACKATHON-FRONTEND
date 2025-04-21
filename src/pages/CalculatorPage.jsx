@@ -77,7 +77,7 @@ const CalculatorPage = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen pt-24 md-pt-34">
+    <div className="bg-gray-100 min-h-screen pt-24 md-pt-34 pb-6 bg-gradient-to-r from-[#d8cafa]/70 to-[#f8d6e9]/70">
       {/* Toast Container */}
       <ToastContainer
         position="top-right"
@@ -109,19 +109,27 @@ const CalculatorPage = () => {
             Guarantor 1
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            {["name", "email", "location", "cnic"].map((field) => (
-              <div key={field}>
-                <label className="block text-gray-600 capitalize">{field}</label>
-                <input
-                  type={field === "email" ? "email" : field === "cnic" ? "number" : "text"}
-                  value={loanDetails.guarantors[0][field]}
-                  onChange={(e) => handleLoanDetailsChange(e, 0, field)}
-                  className="w-full p-2 border rounded"
-                  required
-                />
-              </div>
-            ))}
-          </div>
+  {["name", "email", "location", "cnic"].map((field) => (
+    <div key={field}>
+      <label className="block text-gray-600 capitalize">{field}</label>
+      <input
+        type={field === "email" ? "email" : field === "cnic" ? "number" : "text"}
+        value={loanDetails.guarantors[0][field]}
+        onChange={(e) => handleLoanDetailsChange(e, 0, field)}
+        placeholder={
+          field === "email"
+            ? "name@example.com"
+            : field === "cnic"
+            ? "XXXXX-XXXXXXX-X"
+            : `Enter your ${field}`
+        }
+        className="w-full p-2 border rounded"
+        required
+      />
+    </div>
+  ))}
+</div>
+
         </div>
 
         {/* Guarantor 2 Form */}
@@ -135,6 +143,13 @@ const CalculatorPage = () => {
                 <label className="block text-gray-600 capitalize">{field}</label>
                 <input
                   type={field === "email" ? "email" : field === "cnic" ? "number" : "text"}
+                  placeholder={
+                    field === "email"
+                      ? "name@example.com"
+                      : field === "cnic"
+                      ? "XXXXX-XXXXXXX-X"
+                      : `Enter your ${field}`
+                  }
                   value={loanDetails.guarantors[1][field]}
                   onChange={(e) => handleLoanDetailsChange(e, 1, field)}
                   className="w-full p-2 border rounded"
