@@ -43,6 +43,7 @@ const Navbar = () => {
 
   const confirmLogout = () => {
     localStorage.removeItem("accessToken")
+    localStorage.removeItem("userId")
     setIsUser(false)
     setShowLogoutModal(false)
     navigate("/")

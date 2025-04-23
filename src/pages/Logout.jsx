@@ -18,7 +18,9 @@ const Logout = () => {
       if (response.ok) {
         // Local Storage se token remove karo
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('userId');
         sessionStorage.removeItem('accessToken');
+        sessionStorage.removeItem('userId');
 
         alert('Logout successful!');
         console.log('User logged out successfully');

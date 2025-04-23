@@ -35,7 +35,7 @@ export default function LoginPage() {
         localStorage.setItem("userId", result.data.userId)
         toast.success("Login successful!")
         setTimeout(() => {
-          // window.location.href = "/loanRequest" // Using window.location instead of navigate for Next.js
+          window.location.href = "/loanRequest" // Using window.location instead of navigate for Next.js?
         }, 2000)
       }
     } catch (error) {
