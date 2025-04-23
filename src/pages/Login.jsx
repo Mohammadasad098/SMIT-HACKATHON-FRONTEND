@@ -26,10 +26,7 @@ export default function LoginPage() {
         body: JSON.stringify(data),
       })
 
-      if (!response.ok) {
-        throw new Error("Invalid email or password. Please try again.")
-      }
-
+      
       const result = await response.json()
       console.log("API Response:", result)
 
@@ -37,7 +34,7 @@ export default function LoginPage() {
         localStorage.setItem("accessToken", result.accessToken)
         toast.success("Login successful!")
         setTimeout(() => {
-          window.location.href = "/loanRequest" // Using window.location instead of navigate for Next.js
+          // window.location.href = "/loanRequest" // Using window.location instead of navigate for Next.js
         }, 2000)
       }
     } catch (error) {
@@ -95,11 +92,6 @@ export default function LoginPage() {
               </button>
             </div>
             {errors.password && <span className="text-sm text-red-600">Password is required</span>}
-          </div>
-          <div className="text-right">
-            <a href="/forgot-password" className="text-sm font-medium text-purple-600 hover:text-pink-600">
-              Forgot password?
-            </a>
           </div>
           <div className="flex flex-col space-y-4 pt-4">
             <button
