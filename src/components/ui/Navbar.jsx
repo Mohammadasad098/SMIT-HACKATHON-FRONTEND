@@ -59,6 +59,7 @@ const Navbar = () => {
         { path: "/Services", label: "Services" },
         { path: "/Guarantor", label: "Guarantor" },
         { path: "/loanRequest", label: "Loan Request" },
+        { path: "/payHere", label: "Pay Now" },
         { path: "/logout", label: "Logout", onClick: handleLogoutClick },
       ]
     : [

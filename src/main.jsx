@@ -12,6 +12,7 @@ import UserContextProvider from './context/UserContextProvider.jsx'
 import LoanRequest from './pages/LoanRequest.jsx'
 import AfterLoginRoute from './components/AfterLoginRoute.jsx'
 import Services from './pages/Services.jsx'
+import PayHere from './pages/PayHere.jsx'
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
           {
             path: "services",
             element: <Services/>
+          },
+          {
+            path: "payHere",
+            element: <PayHere/>
           },
     
       ]

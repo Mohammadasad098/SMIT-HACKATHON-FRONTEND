@@ -29,13 +29,14 @@ export default function LoginPage() {
       
       const result = await response.json()
       console.log("API Response:", result)
+      
 
       if (result.accessToken) {
         localStorage.setItem("accessToken", result.accessToken)
         localStorage.setItem("userId", result.data.userId)
         toast.success("Login successful!")
         setTimeout(() => {
-          window.location.href = "/loanRequest" // Using window.location instead of navigate for Next.js?
+          window.location.href = "/loanRequest"
         }, 2000)
       }
     } catch (error) {

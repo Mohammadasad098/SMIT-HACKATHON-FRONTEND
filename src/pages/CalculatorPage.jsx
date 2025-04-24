@@ -21,6 +21,9 @@ const CalculatorPage = () => {
 
   // Submit loan request
   const submitLoanRequest = async () => {
+
+    const userId = localStorage.getItem("userId");
+
     // Validate all guarantor details
     const isValid = loanDetails.guarantors.every(
       (guarantor) =>
@@ -42,6 +45,7 @@ const CalculatorPage = () => {
       email2: loanDetails.guarantors[1].email,
       location2: loanDetails.guarantors[1].location,
       cnic2: loanDetails.guarantors[1].cnic,
+      enrolledUsers: userId,
     };
   
     try {

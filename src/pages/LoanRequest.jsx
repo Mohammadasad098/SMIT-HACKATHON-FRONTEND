@@ -35,45 +35,49 @@ const LoanRequest = () => {
   // Handle form submission
   const onSubmit = async (data) => {
     try {
+      const userId = localStorage.getItem("userId"); // 🔑 Get the user ID
+  
       const requestData = {
         cnic: data.cnic,
         reasonForLoan: data.reasonForLoan,
         category: data.category,
-        subCatogary: data.subCategory, // Ensure key matches backend model
+        subCatogary: data.subCategory, // 🔄 Matches backend model
         deposit: parseFloat(data.initialDeposit),
         loanPeriod: parseInt(data.loanPeriod, 10),
+        enrolledUsers: userId, // 🟢 Include the user ID here
       };
-
+  
       const response = await fetch(`${import.meta.env.VITE_API_BACKEND_URL}/api/v1/financeData`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // Optional but recommended
         },
         body: JSON.stringify(requestData),
       });
-
+  
       if (!response.ok) {
         throw new Error("Failed to submit loan request");
       }
-
+  
       const result = await response.json();
       toast.success("Loan request submitted successfully!");
-
-      // Calculate loan breakdown
+  
+      // 🔢 Breakdown calculation
       const monthlyInstallment = (requestData.deposit / requestData.loanPeriod).toFixed(2);
       setBreakdown({
         principal: requestData.deposit,
         months: requestData.loanPeriod,
         monthlyInstallment,
       });
-
+  
       reset(); // Reset form fields
     } catch (error) {
       console.error("Error:", error);
       toast.error("Error submitting loan request. Please try again.");
     }
   };
-
+  
   // Watch the selected category to dynamically display subcategories
   const category = watch("category");
 
