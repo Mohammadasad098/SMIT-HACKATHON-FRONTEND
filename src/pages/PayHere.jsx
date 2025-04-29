@@ -1,23 +1,42 @@
-import { useState } from "react"
-
-// Mock data - in a real app, this would come from your backend
-const mockUserData = {
-  name: "John Doe",
-  cnic: "12345-6789012-3",
-  loanId: "LN-2023-78945",
-  depositAmount: 25000,
-}
+import { useEffect, useState } from "react"
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [isPaid, setIsPaid] = useState(false)
+  const [userData, setUserData] = useState(null)
+  const [loadingData, setLoadingData] = useState(true)
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const userId = localStorage.getItem("userId")
+
+      if (!userId) {
+        console.error("User ID not found in localStorage")
+        return
+      }
+
+      try {
+        const response = await fetch(`http://localhost:3000/api/v1/financeData/${userId}`)
+        if (!response.ok) {
+          throw new Error("Data fetch failed")
+        }
+
+        const data = await response.json()
+        console.log(data)
+        setUserData(data)
+      } catch (error) {
+        console.error("Error fetching user data:", error)
+      } finally {
+        setLoadingData(false)
+      }
+    }
+
+    fetchUserData()
+  }, [])
 
   const handlePayment = async () => {
     setIsLoading(true)
-
-    // Simulate payment processing
     try {
-      // In a real implementation, you would integrate with Stripe here
       await new Promise((resolve) => setTimeout(resolve, 2000))
       setIsPaid(true)
     } catch (error) {
@@ -27,33 +46,47 @@ export default function Home() {
     }
   }
 
+  if (loadingData) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-pink-50 text-purple-700">
+        Loading user data...
+      </div>
+    )
+  }
+
+  if (!userData) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-pink-50 text-red-600">
+        No data found for this user.
+      </div>
+    )
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4 bg-gradient-to-br from-pink-50 to-purple-100">
       <div className="w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6 text-purple-800">Loan Payment Portal</h1>
 
         <div className="bg-white rounded-lg overflow-hidden border border-purple-200 shadow-lg">
-          {/* Header */}
           <div className="bg-gradient-to-r from-pink-500 to-purple-600 text-white p-6 rounded-t-lg">
             <h2 className="text-xl font-bold">Loan Payment Details</h2>
             <p className="text-pink-100 text-sm mt-1">Review your information and make a payment</p>
           </div>
 
-          {/* Content */}
           <div className="p-6 space-y-4">
             <div className="space-y-2">
               <p className="text-sm text-purple-600">Name</p>
-              <p className="font-medium">{mockUserData.name}</p>
+              <p className="font-medium">{userData.name}</p>
             </div>
 
             <div className="space-y-2">
               <p className="text-sm text-purple-600">CNIC Number</p>
-              <p className="font-medium">{mockUserData.cnic}</p>
+              <p className="font-medium">{userData.cnic}</p>
             </div>
 
             <div className="space-y-2">
               <p className="text-sm text-purple-600">Loan ID</p>
-              <p className="font-medium">{mockUserData.loanId}</p>
+              <p className="font-medium">{userData.loanId}</p>
             </div>
 
             <div className="h-[1px] w-full bg-pink-100 my-4"></div>
@@ -62,13 +95,12 @@ export default function Home() {
               <div className="flex justify-between items-center">
                 <span className="font-medium text-purple-700">Deposit Amount</span>
                 <span className="text-xl font-bold text-pink-600">
-                  Rs. {mockUserData.depositAmount.toLocaleString()}
+                  Rs. {userData.deposit?.toLocaleString()}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Footer */}
           <div className="p-6 bg-purple-50">
             {isPaid ? (
               <div className="w-full text-center p-4 bg-pink-50 rounded-md text-pink-600 border border-pink-200">

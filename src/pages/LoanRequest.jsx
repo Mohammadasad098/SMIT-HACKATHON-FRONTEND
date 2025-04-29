@@ -42,7 +42,8 @@ const LoanRequest = () => {
         reasonForLoan: data.reasonForLoan,
         category: data.category,
         subCatogary: data.subCategory, // 🔄 Matches backend model
-        deposit: parseFloat(data.initialDeposit),
+        deposit: parseFloat(data.deposit),
+        initialDeposit: parseFloat(data.initialDeposit),
         loanPeriod: parseInt(data.loanPeriod, 10),
         enrolledUsers: userId, // 🟢 Include the user ID here
       };
@@ -70,7 +71,7 @@ const LoanRequest = () => {
         months: requestData.loanPeriod,
         monthlyInstallment,
       });
-  
+  console.log(requestData)
       reset(); // Reset form fields
     } catch (error) {
       console.error("Error:", error);
@@ -162,14 +163,28 @@ const LoanRequest = () => {
               </div>
             )}
 
+            {/* Deposit */}
+            <div className="mb-4">
+              <label className="block text-left text-gray-700 font-semibold mb-2">Loan Amount (PKR)</label>
+              <input
+                type="number"
+                {...register("deposit", { required: "Initial Deposit is required" })}
+                className="w-full p-3 rounded border"
+                placeholder="Enter deposit amount"
+              />
+              {errors.deposit && <p className="text-red-500">{errors.deposit.message}</p>}
+            </div>
+
+
+
             {/* Initial Deposit */}
             <div className="mb-4">
-              <label className="block text-left text-gray-700 font-semibold mb-2">Deposit (PKR)</label>
+              <label className="block text-left text-gray-700 font-semibold mb-2">Initial Deposit (PKR)</label>
               <input
                 type="number"
                 {...register("initialDeposit", { required: "Initial Deposit is required" })}
                 className="w-full p-3 rounded border"
-                placeholder="Enter deposit amount"
+                placeholder="Enter initialDeposit amount"
               />
               {errors.initialDeposit && <p className="text-red-500">{errors.initialDeposit.message}</p>}
             </div>
