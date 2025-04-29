@@ -16,7 +16,7 @@ export default function Home() {
       }
 
       try {
-        const response = await fetch(`http://localhost:3000/api/v1/financeData/${userId}`)
+        const response = await fetch(`${import.meta.env.VITE_API_BACKEND_URL}/api/v1/financeData/${userId}`)
         if (!response.ok) {
           throw new Error("Data fetch failed")
         }
